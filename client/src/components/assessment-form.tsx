@@ -600,6 +600,335 @@ export default function AssessmentForm({
           </div>
         );
 
+      case "incident-history":
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Have you had any cyber security incidents in the past 2 years?
+              </Label>
+              <RadioGroup
+                value={data.pastIncidents || ""}
+                onValueChange={(value) => handleInputChange("pastIncidents", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="incidents-yes" />
+                  <Label htmlFor="incidents-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="incidents-no" />
+                  <Label htmlFor="incidents-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        );
+
+      case "cyber-risk":
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Have you undertaken a cyber risk assessment in the past 12 months?
+              </Label>
+              <RadioGroup
+                value={data.cyberRiskAssessmentDone || ""}
+                onValueChange={(value) => handleInputChange("cyberRiskAssessmentDone", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="cyber-risk-yes" />
+                  <Label htmlFor="cyber-risk-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="cyber-risk-no" />
+                  <Label htmlFor="cyber-risk-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+            
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you maintain a Risk Register?
+              </Label>
+              <RadioGroup
+                value={data.riskRegisterMaintained || ""}
+                onValueChange={(value) => handleInputChange("riskRegisterMaintained", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="risk-register-yes" />
+                  <Label htmlFor="risk-register-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="risk-register-no" />
+                  <Label htmlFor="risk-register-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        );
+
+      case "encryption":
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Is data encrypted in transit over the internet?
+              </Label>
+              <RadioGroup
+                value={data.dataEncryptedInTransitInternet || ""}
+                onValueChange={(value) => handleInputChange("dataEncryptedInTransitInternet", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="encrypt-internet-yes" />
+                  <Label htmlFor="encrypt-internet-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="encrypt-internet-no" />
+                  <Label htmlFor="encrypt-internet-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Is data encrypted at rest?
+              </Label>
+              <RadioGroup
+                value={data.dataEncryptedAtRest || ""}
+                onValueChange={(value) => handleInputChange("dataEncryptedAtRest", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="encrypt-rest-yes" />
+                  <Label htmlFor="encrypt-rest-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="encrypt-rest-no" />
+                  <Label htmlFor="encrypt-rest-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        );
+
+      case "antivirus":
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you require Anti-Virus software on all workstations?
+              </Label>
+              <RadioGroup
+                value={data.antivirusRequired || ""}
+                onValueChange={(value) => handleInputChange("antivirusRequired", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="antivirus-yes" />
+                  <Label htmlFor="antivirus-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="antivirus-no" />
+                  <Label htmlFor="antivirus-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you use Intrusion Detection or Prevention Systems (IDS/IPS)?
+              </Label>
+              <RadioGroup
+                value={data.idsIpsUsed || ""}
+                onValueChange={(value) => handleInputChange("idsIpsUsed", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="ids-yes" />
+                  <Label htmlFor="ids-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="ids-no" />
+                  <Label htmlFor="ids-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        );
+
+      case "access-control":
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you have documented Access Control policies?
+              </Label>
+              <RadioGroup
+                value={data.accessControlPolicy || ""}
+                onValueChange={(value) => handleInputChange("accessControlPolicy", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="access-policy-yes" />
+                  <Label htmlFor="access-policy-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="access-policy-no" />
+                  <Label htmlFor="access-policy-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you segment your network to protect critical systems?
+              </Label>
+              <RadioGroup
+                value={data.networkSegmentation || ""}
+                onValueChange={(value) => handleInputChange("networkSegmentation", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="segmentation-yes" />
+                  <Label htmlFor="segmentation-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="segmentation-no" />
+                  <Label htmlFor="segmentation-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        );
+
+      case "vulnerability":
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you conduct vulnerability scanning?
+              </Label>
+              <RadioGroup
+                value={data.vulnerabilityScanning || ""}
+                onValueChange={(value) => handleInputChange("vulnerabilityScanning", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="vuln-scan-yes" />
+                  <Label htmlFor="vuln-scan-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="vuln-scan-no" />
+                  <Label htmlFor="vuln-scan-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you have a patch management process?
+              </Label>
+              <RadioGroup
+                value={data.patchManagement || ""}
+                onValueChange={(value) => handleInputChange("patchManagement", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="patch-mgmt-yes" />
+                  <Label htmlFor="patch-mgmt-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="patch-mgmt-no" />
+                  <Label htmlFor="patch-mgmt-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        );
+
+      case "security-framework":
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you follow an established security framework?
+              </Label>
+              <RadioGroup
+                value={data.securityFramework || ""}
+                onValueChange={(value) => handleInputChange("securityFramework", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="framework-yes" />
+                  <Label htmlFor="framework-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="framework-no" />
+                  <Label htmlFor="framework-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            {data.securityFramework === "yes" && (
+              <div>
+                <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                  Which framework do you primarily follow?
+                </Label>
+                <Select
+                  value={data.primaryFramework || ""}
+                  onValueChange={(value) => handleInputChange("primaryFramework", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select framework" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="iso27001">ISO 27001</SelectItem>
+                    <SelectItem value="nist">NIST</SelectItem>
+                    <SelectItem value="cis">CIS Controls</SelectItem>
+                    <SelectItem value="pci-dss">PCI DSS</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+          </div>
+        );
+
+      case "siem":
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you use breach detection tools (SIEM, SOC services)?
+              </Label>
+              <RadioGroup
+                value={data.breachDetectionTools || ""}
+                onValueChange={(value) => handleInputChange("breachDetectionTools", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="siem-yes" />
+                  <Label htmlFor="siem-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="siem-no" />
+                  <Label htmlFor="siem-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div>
+              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+                Do you use SIEM or SOC monitoring services?
+              </Label>
+              <RadioGroup
+                value={data.siemSocUsed || ""}
+                onValueChange={(value) => handleInputChange("siemSocUsed", value)}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="soc-yes" />
+                  <Label htmlFor="soc-yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="soc-no" />
+                  <Label htmlFor="soc-no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        );
+
       default:
         return (
           <div className="text-center py-8">
