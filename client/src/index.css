@@ -1,29 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 :root {
   --background: hsl(0, 0%, 100%);
-  --foreground: hsl(220, 14.3%, 4.1%);
-  --muted: hsl(210, 40%, 96%);
-  --muted-foreground: hsl(215, 25.3%, 26.7%);
+  --foreground: hsl(210, 11%, 15%);
+  --muted: hsl(210, 14%, 95%);
+  --muted-foreground: hsl(215, 16%, 47%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(220, 14.3%, 4.1%);
+  --popover-foreground: hsl(210, 11%, 15%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(220, 14.3%, 4.1%);
-  --border: hsl(220, 13%, 91%);
-  --input: hsl(220, 13%, 91%);
-  --primary: hsl(243, 75%, 59%);
-  --primary-foreground: hsl(210, 20%, 98%);
-  --secondary: hsl(210, 40%, 96%);
-  --secondary-foreground: hsl(222, 9.8%, 10%);
-  --accent: hsl(210, 40%, 96%);
-  --accent-foreground: hsl(222, 9.8%, 10%);
-  --destructive: hsl(0, 84.2%, 60.2%);
-  --destructive-foreground: hsl(210, 20%, 98%);
-  --ring: hsl(243, 75%, 59%);
+  --card-foreground: hsl(210, 11%, 15%);
+  --border: hsl(214, 13%, 88%);
+  --input: hsl(214, 13%, 88%);
+  --primary: hsl(214, 32%, 34%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(210, 14%, 95%);
+  --secondary-foreground: hsl(210, 11%, 15%);
+  --accent: hsl(210, 14%, 95%);
+  --accent-foreground: hsl(210, 11%, 15%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(214, 32%, 34%);
   --radius: 0.5rem;
 }
 
@@ -56,7 +56,7 @@
   }
 
   body {
-    @apply font-inter antialiased bg-background text-foreground;
+    @apply antialiased bg-background text-foreground;
     font-family: 'Inter', sans-serif;
   }
 }

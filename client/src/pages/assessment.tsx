@@ -6,6 +6,9 @@ import UserInfoForm from "@/components/user-info-form";
 import AssessmentForm from "@/components/assessment-form";
 import SectionNav from "@/components/section-nav";
 import { FormSection, UserFormData, AssessmentFormData } from "@/lib/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 const sections: FormSection[] = [
   { id: "user-info", title: "User Information", icon: "user-circle", completed: false },
