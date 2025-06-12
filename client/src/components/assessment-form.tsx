@@ -48,8 +48,10 @@ export default function AssessmentForm({
   onNext,
   onPrevious,
   onSave,
+  onComplete,
   lastSaved,
   isLastSection,
+  isLoading,
 }: AssessmentFormProps) {
   const { toast } = useToast();
   const [uploadedFiles, setUploadedFiles] = useState<{ [key: string]: string[] }>({});
@@ -98,10 +100,7 @@ export default function AssessmentForm({
   const handleContinue = () => {
     onSave();
     if (isLastSection) {
-      toast({
-        title: "Assessment completed!",
-        description: "Your cyber risk assessment has been saved successfully.",
-      });
+      onComplete();
     } else {
       onNext();
     }
