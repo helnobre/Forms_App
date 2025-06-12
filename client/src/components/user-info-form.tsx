@@ -90,7 +90,7 @@ export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLo
 
             <div>
               <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                Email Address *
+                {t('userInfo.email')} *
               </Label>
               <Input
                 id="email"
@@ -107,7 +107,7 @@ export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLo
 
             <div>
               <Label htmlFor="company" className="text-sm font-medium text-gray-700">
-                Company Name *
+                {t('userInfo.company')} *
               </Label>
               <Input
                 id="company"
@@ -124,7 +124,7 @@ export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLo
 
             <div>
               <Label htmlFor="position" className="text-sm font-medium text-gray-700">
-                Position/Title *
+                {t('userInfo.position')} *
               </Label>
               <Input
                 id="position"
@@ -141,7 +141,7 @@ export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLo
 
             <div>
               <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                Phone Number *
+                {t('userInfo.phone')} *
               </Label>
               <Input
                 id="phone"
@@ -158,7 +158,7 @@ export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLo
 
             <div>
               <Label htmlFor="employeeCount" className="text-sm font-medium text-gray-700">
-                Number of Employees *
+                {t('userInfo.employeeCount')} *
               </Label>
               <Select
                 value={data.employeeCount}
@@ -168,12 +168,12 @@ export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLo
                   <SelectValue placeholder="Select range" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="1-10">1-10 employees</SelectItem>
-                  <SelectItem value="11-50">11-50 employees</SelectItem>
-                  <SelectItem value="51-200">51-200 employees</SelectItem>
-                  <SelectItem value="201-500">201-500 employees</SelectItem>
-                  <SelectItem value="501-1000">501-1000 employees</SelectItem>
-                  <SelectItem value="1000+">1000+ employees</SelectItem>
+                  <SelectItem value="1-10">{t('employees.1-10')}</SelectItem>
+                  <SelectItem value="11-50">{t('employees.11-50')}</SelectItem>
+                  <SelectItem value="51-200">{t('employees.51-200')}</SelectItem>
+                  <SelectItem value="201-500">{t('employees.201-500')}</SelectItem>
+                  <SelectItem value="501-1000">{t('employees.501-1000')}</SelectItem>
+                  <SelectItem value="1000+">{t('employees.1000+')}</SelectItem>
                 </SelectContent>
               </Select>
               {errors.employeeCount && (
@@ -196,7 +196,7 @@ export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLo
               )}
             </div>
             <Button onClick={handleContinue} disabled={isLoading}>
-              {isLoading ? "Saving..." : "Continue"}
+              {isLoading ? t('userInfo.saving') : t('userInfo.continue')}
               {!isLoading && <ArrowRight className="w-4 h-4 ml-2" />}
             </Button>
           </div>
