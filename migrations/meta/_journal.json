@@ -8,6 +8,13 @@
       "when": 1749731187939,
       "tag": "0000_spotty_ricochet",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1749733705916,
+      "tag": "0001_absent_yellow_claw",
+      "breakpoints": true
     }
   ]
 }

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { UserFormData } from "@/lib/types";
 
 interface UserInfoFormProps {
@@ -18,6 +19,7 @@ interface UserInfoFormProps {
 
 export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLoading }: UserInfoFormProps) {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [errors, setErrors] = useState<Partial<UserFormData>>({});
 
   const handleInputChange = (field: keyof UserFormData, value: string) => {
@@ -31,13 +33,13 @@ export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLo
   const validateForm = (): boolean => {
     const newErrors: Partial<UserFormData> = {};
     
-    if (!data.fullName?.trim()) newErrors.fullName = "Full name is required";
-    if (!data.email?.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(data.email)) newErrors.email = "Email is invalid";
-    if (!data.company?.trim()) newErrors.company = "Company name is required";
-    if (!data.position?.trim()) newErrors.position = "Position is required";
-    if (!data.phone?.trim()) newErrors.phone = "Phone number is required";
-    if (!data.employeeCount) newErrors.employeeCount = "Employee count is required";
+    if (!data.fullName?.trim()) newErrors.fullName = t('validation.nameRequired');
+    if (!data.email?.trim()) newErrors.email = t('validation.emailRequired');
+    else if (!/\S+@\S+\.\S+/.test(data.email)) newErrors.email = t('validation.emailInvalid');
+    if (!data.company?.trim()) newErrors.company = t('validation.companyRequired');
+    if (!data.position?.trim()) newErrors.position = t('validation.positionRequired');
+    if (!data.phone?.trim()) newErrors.phone = t('validation.phoneRequired');
+    if (!data.employeeCount) newErrors.employeeCount = t('validation.employeeCountRequired');
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -61,17 +63,17 @@ export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLo
         <div className="px-6 py-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 flex items-center">
             <UserCircle className="text-primary mr-2" />
-            User Information
+            {t('userInfo.title')}
           </h2>
           <p className="text-sm text-gray-600 mt-1">
-            Please provide your contact information and company details.
+            {t('userInfo.description')}
           </p>
         </div>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <Label htmlFor="fullName" className="text-sm font-medium text-gray-700">
-                Full Name *
+                {t('userInfo.fullName')} *
               </Label>
               <Input
                 id="fullName"

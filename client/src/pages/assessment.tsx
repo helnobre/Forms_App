@@ -259,18 +259,21 @@ export default function AssessmentPage() {
         </div>
       )}
 
-      <div className="flex">
+      <div className="flex pt-16">
         {/* Sidebar Navigation */}
-        <div className="hidden xl:block">
+        <div className="hidden xl:block fixed left-0 top-16 h-full w-64 bg-white border-r border-gray-200 overflow-y-auto">
           <SectionNav
-            sections={formSections}
+            sections={formSections.map(section => ({ 
+              ...section, 
+              title: t(section.title) 
+            }))}
             currentSection={currentSection}
             onSectionClick={handleSectionClick}
           />
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex-1 xl:ml-64 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {currentSection === 0 ? (
             <UserInfoForm
               data={userFormData}

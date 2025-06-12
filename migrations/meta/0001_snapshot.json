@@ -1,0 +1,775 @@
+{
+  "id": "42885e0f-b1fe-42ec-8fa5-96bca8d0909e",
+  "prevId": "334ca025-a153-47f3-a467-baadb215aada",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.assessment_files": {
+      "name": "assessment_files",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "assessment_id": {
+          "name": "assessment_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "file_name": {
+          "name": "file_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "file_type": {
+          "name": "file_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "file_size": {
+          "name": "file_size",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "file_path": {
+          "name": "file_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "section": {
+          "name": "section",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "uploaded_at": {
+          "name": "uploaded_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "assessment_files_assessment_id_assessments_id_fk": {
+          "name": "assessment_files_assessment_id_assessments_id_fk",
+          "tableFrom": "assessment_files",
+          "tableTo": "assessments",
+          "columnsFrom": [
+            "assessment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.assessments": {
+      "name": "assessments",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "year": {
+          "name": "year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "completed_at": {
+          "name": "completed_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_completed": {
+          "name": "is_completed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "remote_work_percentage": {
+          "name": "remote_work_percentage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gdpr_compliance": {
+          "name": "gdpr_compliance",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "breach_reporting_required": {
+          "name": "breach_reporting_required",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "breach_notification_required": {
+          "name": "breach_notification_required",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "compliance_acts": {
+          "name": "compliance_acts",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sensitive_client_data": {
+          "name": "sensitive_client_data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "government_data": {
+          "name": "government_data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "confidential_commercial_data": {
+          "name": "confidential_commercial_data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "risk_assessments": {
+          "name": "risk_assessments",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "past_incidents": {
+          "name": "past_incidents",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cyber_risk_assessment_done": {
+          "name": "cyber_risk_assessment_done",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "risk_assessment_internal": {
+          "name": "risk_assessment_internal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_risk_assessment": {
+          "name": "last_risk_assessment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "risk_register_maintained": {
+          "name": "risk_register_maintained",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "risk_register_updated": {
+          "name": "risk_register_updated",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "third_party_risks_considered": {
+          "name": "third_party_risks_considered",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password_policy": {
+          "name": "password_policy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password_policy_reviewed": {
+          "name": "password_policy_reviewed",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password_requirements": {
+          "name": "password_requirements",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mfa_email": {
+          "name": "mfa_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mfa_remote_access": {
+          "name": "mfa_remote_access",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "single_sign_on": {
+          "name": "single_sign_on",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_encrypted_transit_internet": {
+          "name": "data_encrypted_transit_internet",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_encrypted_transit_internal": {
+          "name": "data_encrypted_transit_internal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "encryption_key_management": {
+          "name": "encryption_key_management",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_encrypted_at_rest": {
+          "name": "data_encrypted_at_rest",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "antivirus_required": {
+          "name": "antivirus_required",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "antimalware_required": {
+          "name": "antimalware_required",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ids_ips_used": {
+          "name": "ids_ips_used",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ids_ips_details": {
+          "name": "ids_ips_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "antivirus_monitoring": {
+          "name": "antivirus_monitoring",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_control_policy": {
+          "name": "access_control_policy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_control_policy_reviewed": {
+          "name": "access_control_policy_reviewed",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "remote_access_policy": {
+          "name": "remote_access_policy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "remote_access_policy_reviewed": {
+          "name": "remote_access_policy_reviewed",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_control_tools": {
+          "name": "access_control_tools",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "network_segmentation": {
+          "name": "network_segmentation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "annual_training": {
+          "name": "annual_training",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "periodic_training": {
+          "name": "periodic_training",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phishing_tests": {
+          "name": "phishing_tests",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "training_provider": {
+          "name": "training_provider",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "employee_engagement": {
+          "name": "employee_engagement",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "retention_assessment": {
+          "name": "retention_assessment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vulnerability_scanning": {
+          "name": "vulnerability_scanning",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scanning_frequency": {
+          "name": "scanning_frequency",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "patch_management": {
+          "name": "patch_management",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vulnerability_remediation": {
+          "name": "vulnerability_remediation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_recovery_policy": {
+          "name": "disaster_recovery_policy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dr_policy_updated": {
+          "name": "dr_policy_updated",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dr_testing": {
+          "name": "dr_testing",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_restore_testing": {
+          "name": "data_restore_testing",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "business_continuity_plan": {
+          "name": "business_continuity_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bcp_updated": {
+          "name": "bcp_updated",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bcp_testing": {
+          "name": "bcp_testing",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "incident_response_plan": {
+          "name": "incident_response_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "irp_updated": {
+          "name": "irp_updated",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "irp_testing": {
+          "name": "irp_testing",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "penetration_testing": {
+          "name": "penetration_testing",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pen_testing_annual": {
+          "name": "pen_testing_annual",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pen_testing_third_party": {
+          "name": "pen_testing_third_party",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pen_testing_accredited": {
+          "name": "pen_testing_accredited",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pen_testing_scope": {
+          "name": "pen_testing_scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "findings_remediation": {
+          "name": "findings_remediation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "security_framework": {
+          "name": "security_framework",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "primary_framework": {
+          "name": "primary_framework",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "framework_status": {
+          "name": "framework_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "policy_review_frequency": {
+          "name": "policy_review_frequency",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "third_party_procedures": {
+          "name": "third_party_procedures",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "breach_detection_tools": {
+          "name": "breach_detection_tools",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "siem_soc_used": {
+          "name": "siem_soc_used",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "security_solutions": {
+          "name": "security_solutions",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "encryption_key_mgmt_details": {
+          "name": "encryption_key_mgmt_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ids_ips_details_2": {
+          "name": "ids_ips_details_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_control_tools_details": {
+          "name": "access_control_tools_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "training_schedule": {
+          "name": "training_schedule",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "training_attendance": {
+          "name": "training_attendance",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "periodic_training_details": {
+          "name": "periodic_training_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phishing_test_details": {
+          "name": "phishing_test_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "training_provider_details": {
+          "name": "training_provider_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vulnerability_scanning_evidence": {
+          "name": "vulnerability_scanning_evidence",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "patch_management_details": {
+          "name": "patch_management_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dr_policy_document": {
+          "name": "dr_policy_document",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bcp_document": {
+          "name": "bcp_document",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "irp_document": {
+          "name": "irp_document",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "penetration_testing_details": {
+          "name": "penetration_testing_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "framework_evidence": {
+          "name": "framework_evidence",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "policy_review_details": {
+          "name": "policy_review_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "third_party_procedures_details": {
+          "name": "third_party_procedures_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "siem_details": {
+          "name": "siem_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "soc_details": {
+          "name": "soc_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assistance_required": {
+          "name": "assistance_required",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "assessments_user_id_users_id_fk": {
+          "name": "assessments_user_id_users_id_fk",
+          "tableFrom": "assessments",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "company": {
+          "name": "company",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "employee_count": {
+          "name": "employee_count",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

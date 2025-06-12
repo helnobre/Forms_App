@@ -123,6 +123,28 @@ export const assessments = pgTable("assessments", {
   siemSocUsed: text("siem_soc_used"),
   securitySolutions: text("security_solutions"),
   
+  // Additional fields for complete coverage from document
+  encryptionKeyMgmtDetails: text("encryption_key_mgmt_details"),
+  idsIpsDetails2: text("ids_ips_details_2"),
+  accessControlToolsDetails: text("access_control_tools_details"),
+  trainingSchedule: text("training_schedule"),
+  trainingAttendance: text("training_attendance"),
+  periodicTrainingDetails: text("periodic_training_details"),
+  phishingTestDetails: text("phishing_test_details"),
+  trainingProviderDetails: text("training_provider_details"),
+  vulnerabilityScanningEvidence: text("vulnerability_scanning_evidence"),
+  patchManagementDetails: text("patch_management_details"),
+  drPolicyDocument: text("dr_policy_document"),
+  bcpDocument: text("bcp_document"),
+  irpDocument: text("irp_document"),
+  penetrationTestingDetails: text("penetration_testing_details"),
+  frameworkEvidence: text("framework_evidence"),
+  policyReviewDetails: text("policy_review_details"),
+  thirdPartyProceduresDetails: text("third_party_procedures_details"),
+  siemDetails: text("siem_details"),
+  socDetails: text("soc_details"),
+  assistanceRequired: text("assistance_required"),
+  
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

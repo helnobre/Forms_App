@@ -1,0 +1,20 @@
+ALTER TABLE "assessments" ADD COLUMN "encryption_key_mgmt_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "ids_ips_details_2" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "access_control_tools_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "training_schedule" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "training_attendance" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "periodic_training_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "phishing_test_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "training_provider_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "vulnerability_scanning_evidence" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "patch_management_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "dr_policy_document" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "bcp_document" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "irp_document" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "penetration_testing_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "framework_evidence" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "policy_review_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "third_party_procedures_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "siem_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "soc_details" text;--> statement-breakpoint
+ALTER TABLE "assessments" ADD COLUMN "assistance_required" text;
