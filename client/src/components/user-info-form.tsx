@@ -11,12 +11,12 @@ import { UserFormData } from "@/lib/types";
 interface UserInfoFormProps {
   data: UserFormData;
   onChange: (data: UserFormData) => void;
-  onNext: () => void;
-  onSave: () => void;
+  onSubmit: (data: UserFormData) => void;
   lastSaved: Date | null;
+  isLoading: boolean;
 }
 
-export default function UserInfoForm({ data, onChange, onNext, onSave, lastSaved }: UserInfoFormProps) {
+export default function UserInfoForm({ data, onChange, onSubmit, lastSaved, isLoading }: UserInfoFormProps) {
   const { toast } = useToast();
   const [errors, setErrors] = useState<Partial<UserFormData>>({});
 
@@ -45,12 +45,7 @@ export default function UserInfoForm({ data, onChange, onNext, onSave, lastSaved
 
   const handleContinue = () => {
     if (validateForm()) {
-      onSave();
-      onNext();
-      toast({
-        title: "User information saved",
-        description: "You can now proceed to the assessment sections.",
-      });
+      onSubmit(data);
     } else {
       toast({
         title: "Please complete all required fields",
@@ -192,19 +187,15 @@ export default function UserInfoForm({ data, onChange, onNext, onSave, lastSaved
         <CardContent className="px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <Button variant="outline" onClick={onSave}>
-                <Save className="w-4 h-4 mr-2" />
-                Save Draft
-              </Button>
               {lastSaved && (
                 <span className="text-sm text-gray-500">
                   Last saved: {lastSaved.toLocaleTimeString()}
                 </span>
               )}
             </div>
-            <Button onClick={handleContinue}>
-              Continue
-              <ArrowRight className="w-4 h-4 ml-2" />
+            <Button onClick={handleContinue} disabled={isLoading}>
+              {isLoading ? "Saving..." : "Continue"}
+              {!isLoading && <ArrowRight className="w-4 h-4 ml-2" />}
             </Button>
           </div>
         </CardContent>

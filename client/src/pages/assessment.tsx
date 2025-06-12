@@ -35,8 +35,69 @@ export default function AssessmentPage() {
   });
   const [assessmentFormData, setAssessmentFormData] = useState<AssessmentFormData>({});
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [userId, setUserId] = useState<number | null>(null);
+  const [assessmentId, setAssessmentId] = useState<number | null>(null);
+
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const progress = ((currentSection + 1) / sections.length) * 100;
+
+  // Mutations for database operations
+  const createUserMutation = useMutation({
+    mutationFn: async (userData: UserFormData) => {
+      const response = await apiRequest('POST', '/api/users', userData);
+      return await response.json();
+    },
+    onSuccess: (user: any) => {
+      setUserId(user.id);
+      toast({
+        title: "User information saved",
+        description: "Your information has been successfully stored.",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error saving user information",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const createAssessmentMutation = useMutation({
+    mutationFn: async (assessmentData: any) => {
+      const response = await apiRequest('POST', '/api/assessments', assessmentData);
+      return await response.json();
+    },
+    onSuccess: (assessment: any) => {
+      setAssessmentId(assessment.id);
+      setLastSaved(new Date());
+    },
+  });
+
+  const updateAssessmentMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: number; data: any }) => {
+      const response = await apiRequest('PUT', `/api/assessments/${id}`, data);
+      return await response.json();
+    },
+    onSuccess: () => {
+      setLastSaved(new Date());
+    },
+  });
+
+  const completeAssessmentMutation = useMutation({
+    mutationFn: async (id: number) => {
+      const response = await apiRequest('POST', `/api/assessments/${id}/complete`);
+      return await response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Assessment completed!",
+        description: "Your cyber risk assessment has been submitted successfully.",
+      });
+    },
+  });
 
   const updateSectionCompletion = (sectionIndex: number, completed: boolean) => {
     setFormSections(prev => 
@@ -63,10 +124,51 @@ export default function AssessmentPage() {
     setCurrentSection(sectionIndex);
   };
 
-  const autoSave = () => {
-    // Auto-save functionality
-    setLastSaved(new Date());
-    // Here you would implement the actual save to backend
+  const handleUserFormSubmit = async (userData: UserFormData) => {
+    try {
+      const user = await createUserMutation.mutateAsync(userData);
+      
+      // Create initial assessment record
+      const currentYear = new Date().getFullYear();
+      const assessmentData = {
+        userId: user.id,
+        year: currentYear,
+        isCompleted: false,
+        ...assessmentFormData,
+      };
+      
+      await createAssessmentMutation.mutateAsync(assessmentData);
+      handleNext();
+    } catch (error) {
+      console.error('Error saving user data:', error);
+    }
+  };
+
+  const autoSave = async () => {
+    if (assessmentId && Object.keys(assessmentFormData).length > 0) {
+      try {
+        await updateAssessmentMutation.mutateAsync({
+          id: assessmentId,
+          data: assessmentFormData,
+        });
+      } catch (error) {
+        console.error('Auto-save failed:', error);
+      }
+    }
+  };
+
+  const handleAssessmentComplete = async () => {
+    if (assessmentId) {
+      try {
+        await updateAssessmentMutation.mutateAsync({
+          id: assessmentId,
+          data: assessmentFormData,
+        });
+        await completeAssessmentMutation.mutateAsync(assessmentId);
+      } catch (error) {
+        console.error('Error completing assessment:', error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -116,9 +218,9 @@ export default function AssessmentPage() {
             <UserInfoForm
               data={userFormData}
               onChange={setUserFormData}
-              onNext={handleNext}
-              onSave={autoSave}
+              onSubmit={handleUserFormSubmit}
               lastSaved={lastSaved}
+              isLoading={createUserMutation.isPending}
             />
           ) : (
             <AssessmentForm
@@ -129,8 +231,10 @@ export default function AssessmentPage() {
               onNext={handleNext}
               onPrevious={handlePrevious}
               onSave={autoSave}
+              onComplete={handleAssessmentComplete}
               lastSaved={lastSaved}
               isLastSection={currentSection === sections.length - 1}
+              isLoading={updateAssessmentMutation.isPending || completeAssessmentMutation.isPending}
             />
           )}
         </div>

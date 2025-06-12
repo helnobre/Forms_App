@@ -19,8 +19,10 @@ interface AssessmentFormProps {
   onNext: () => void;
   onPrevious: () => void;
   onSave: () => void;
+  onComplete: () => void;
   lastSaved: Date | null;
   isLastSection: boolean;
+  isLoading: boolean;
 }
 
 const riskScenarios = [
