@@ -127,6 +127,101 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Dynamic questions API routes
+  
+  // Get questions by section
+  app.get("/api/questions/section/:section", async (req, res) => {
+    try {
+      const section = req.params.section;
+      const questions = await storage.getQuestionsBySection(section);
+      res.json(questions);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Get all questions
+  app.get("/api/questions", async (req, res) => {
+    try {
+      const questions = await storage.getAllQuestions();
+      res.json(questions);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Submit/update response
+  app.post("/api/responses", async (req, res) => {
+    try {
+      const { userId, questionId, answer } = req.body;
+      const response = await storage.updateResponse(userId, questionId, answer);
+      res.json(response);
+    } catch (error) {
+      console.error("Error saving response:", error);
+      res.status(400).json({ message: "Invalid response data", error: error instanceof Error ? error.message : "Unknown error" });
+    }
+  });
+
+  // Get responses by user ID
+  app.get("/api/users/:userId/responses", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const responses = await storage.getResponsesByUserId(userId);
+      res.json(responses);
+    } catch (error) {
+      console.error("Error fetching responses:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Admin: Get all responses grouped by user
+  app.get("/api/admin/responses", async (req, res) => {
+    try {
+      const data = await storage.getAllResponsesGroupedByUser();
+      res.json(data);
+    } catch (error) {
+      console.error("Error fetching admin responses:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // File upload endpoint
+  app.post("/api/upload", upload.single('file'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+
+      const { userId, questionId } = req.body;
+      
+      // Save file info to database
+      const fileData = await storage.saveFile({
+        userId: parseInt(userId),
+        questionId: questionId ? parseInt(questionId) : null,
+        fileName: req.file.originalname,
+        fileType: req.file.mimetype,
+        fileSize: req.file.size,
+        filePath: req.file.path,
+      });
+
+      // Also save as response if questionId is provided
+      if (questionId) {
+        await storage.updateResponse(parseInt(userId), parseInt(questionId), req.file.originalname);
+      }
+
+      res.json({ 
+        message: "File uploaded successfully", 
+        file: fileData,
+        fileName: req.file.originalname 
+      });
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      res.status(500).json({ message: "File upload failed", error: error instanceof Error ? error.message : "Unknown error" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
