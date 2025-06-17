@@ -9,7 +9,7 @@ interface LanguageContextType {
 const translations = {
   en: {
     // Header
-    'header.title': 'Cyber Risk Assessment Portal',
+    'header.title': 'Moore Risk Assessment Portal',
     'header.progress': 'Assessment Progress',
     
     // Navigation
@@ -136,7 +136,7 @@ const translations = {
   },
   pt: {
     // Header
-    'header.title': 'Portal de Avaliação de Risco Cibernético',
+    'header.title': 'Portal de ITGC da Moore',
     'header.progress': 'Progresso da Avaliação',
     
     // Navigation

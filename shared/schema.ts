@@ -149,14 +149,40 @@ export const assessments = pgTable("assessments", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+export const questions = pgTable("questions", {
+  id: serial("id").primaryKey(),
+  text: text("text").notNull(),
+  type: text("type").notNull(), // 'text', 'radio', 'checkbox', 'file'
+  section: text("section").notNull(),
+  order: integer("order").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const options = pgTable("options", {
+  id: serial("id").primaryKey(),
+  questionId: integer("question_id").references(() => questions.id).notNull(),
+  text: text("text").notNull(),
+  value: text("value").notNull(),
+  order: integer("order").notNull(),
+});
+
+export const responses = pgTable("responses", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  questionId: integer("question_id").references(() => questions.id).notNull(),
+  answer: text("answer").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export const assessmentFiles = pgTable("assessment_files", {
   id: serial("id").primaryKey(),
-  assessmentId: integer("assessment_id").references(() => assessments.id).notNull(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  questionId: integer("question_id").references(() => questions.id),
   fileName: text("file_name").notNull(),
   fileType: text("file_type").notNull(),
   fileSize: integer("file_size").notNull(),
   filePath: text("file_path").notNull(),
-  section: text("section").notNull(),
   uploadedAt: timestamp("uploaded_at").defaultNow().notNull(),
 });
 
@@ -171,6 +197,21 @@ export const insertAssessmentSchema = createInsertSchema(assessments).omit({
   updatedAt: true,
 });
 
+export const insertQuestionSchema = createInsertSchema(questions).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertOptionSchema = createInsertSchema(options).omit({
+  id: true,
+});
+
+export const insertResponseSchema = createInsertSchema(responses).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export const insertAssessmentFileSchema = createInsertSchema(assessmentFiles).omit({
   id: true,
   uploadedAt: true,
@@ -180,5 +221,11 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertAssessment = z.infer<typeof insertAssessmentSchema>;
 export type Assessment = typeof assessments.$inferSelect;
+export type InsertQuestion = z.infer<typeof insertQuestionSchema>;
+export type Question = typeof questions.$inferSelect;
+export type InsertOption = z.infer<typeof insertOptionSchema>;
+export type Option = typeof options.$inferSelect;
+export type InsertResponse = z.infer<typeof insertResponseSchema>;
+export type Response = typeof responses.$inferSelect;
 export type InsertAssessmentFile = z.infer<typeof insertAssessmentFileSchema>;
 export type AssessmentFile = typeof assessmentFiles.$inferSelect;
