@@ -1,6 +1,11 @@
-import { users, assessments, type User, type InsertUser, type Assessment, type InsertAssessment } from "@shared/schema";
+import { 
+  users, assessments, questions, options, responses, assessmentFiles,
+  type User, type InsertUser, type Assessment, type InsertAssessment,
+  type Question, type InsertQuestion, type Option, type InsertOption,
+  type Response, type InsertResponse, type AssessmentFile, type InsertAssessmentFile
+} from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc, asc } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -11,6 +16,15 @@ export interface IStorage {
   updateAssessment(id: number, data: Partial<InsertAssessment>): Promise<Assessment | undefined>;
   getAssessmentsByUserId(userId: number): Promise<Assessment[]>;
   completeAssessment(id: number): Promise<Assessment | undefined>;
+  
+  // Dynamic questions system
+  getQuestionsBySection(section: string): Promise<(Question & { options: Option[] })[]>;
+  getAllQuestions(): Promise<(Question & { options: Option[] })[]>;
+  createResponse(insertResponse: InsertResponse): Promise<Response>;
+  updateResponse(userId: number, questionId: number, answer: string): Promise<Response | undefined>;
+  getResponsesByUserId(userId: number): Promise<(Response & { question: Question })[]>;
+  getAllResponsesGroupedByUser(): Promise<{ user: User; responses: (Response & { question: Question })[] }[]>;
+  saveFile(insertFile: InsertAssessmentFile): Promise<AssessmentFile>;
 }
 
 export class DatabaseStorage implements IStorage {
