@@ -42,7 +42,11 @@ interface AdminData {
 export default function AdminPage() {
   const { data: adminData = [], isLoading, error } = useQuery({
     queryKey: ['/api/admin/responses'],
-    queryFn: () => apiRequest<AdminData[]>('/api/admin/responses'),
+    queryFn: async () => {
+      const response = await fetch('/api/admin/responses');
+      if (!response.ok) throw new Error('Failed to fetch admin data');
+      return response.json();
+    },
   });
 
   if (isLoading) {
@@ -113,18 +117,20 @@ export default function AdminPage() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">{adminData.length}</div>
+                <div className="text-2xl font-bold text-blue-600">
+                  {Array.isArray(adminData) ? adminData.length : 0}
+                </div>
                 <div className="text-sm text-gray-500">Total Users</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">
-                  {adminData.reduce((sum, user) => sum + user.responses.length, 0)}
+                  {Array.isArray(adminData) ? adminData.reduce((sum: number, user: AdminData) => sum + user.responses.length, 0) : 0}
                 </div>
                 <div className="text-sm text-gray-500">Total Responses</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-purple-600">
-                  {adminData.filter(user => user.responses.length > 0).length}
+                  {Array.isArray(adminData) ? adminData.filter((user: AdminData) => user.responses.length > 0).length : 0}
                 </div>
                 <div className="text-sm text-gray-500">Active Assessments</div>
               </div>
@@ -132,7 +138,7 @@ export default function AdminPage() {
           </CardContent>
         </Card>
 
-        {adminData.map((userData) => (
+        {Array.isArray(adminData) && adminData.map((userData: AdminData) => (
           <Card key={userData.user.id} className="border-l-4 border-l-blue-500">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
@@ -232,7 +238,7 @@ export default function AdminPage() {
           </Card>
         ))}
 
-        {adminData.length === 0 && (
+        {Array.isArray(adminData) && adminData.length === 0 && (
           <Card>
             <CardContent className="text-center py-12">
               <User className="w-12 h-12 text-gray-400 mx-auto mb-4" />
