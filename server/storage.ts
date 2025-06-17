@@ -5,7 +5,7 @@ import {
   type Response, type InsertResponse, type AssessmentFile, type InsertAssessmentFile
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, asc } from "drizzle-orm";
+import { eq, desc, asc, and } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -83,6 +83,123 @@ export class DatabaseStorage implements IStorage {
       .where(eq(assessments.id, id))
       .returning();
     return assessment || undefined;
+  }
+
+  async getQuestionsBySection(section: string): Promise<(Question & { options: Option[] })[]> {
+    const questionsData = await db
+      .select()
+      .from(questions)
+      .where(eq(questions.section, section))
+      .orderBy(asc(questions.order));
+
+    const questionsWithOptions = await Promise.all(
+      questionsData.map(async (question) => {
+        const optionsData = await db
+          .select()
+          .from(options)
+          .where(eq(options.questionId, question.id))
+          .orderBy(asc(options.order));
+        
+        return { ...question, options: optionsData };
+      })
+    );
+
+    return questionsWithOptions;
+  }
+
+  async getAllQuestions(): Promise<(Question & { options: Option[] })[]> {
+    const questionsData = await db
+      .select()
+      .from(questions)
+      .orderBy(asc(questions.section), asc(questions.order));
+
+    const questionsWithOptions = await Promise.all(
+      questionsData.map(async (question) => {
+        const optionsData = await db
+          .select()
+          .from(options)
+          .where(eq(options.questionId, question.id))
+          .orderBy(asc(options.order));
+        
+        return { ...question, options: optionsData };
+      })
+    );
+
+    return questionsWithOptions;
+  }
+
+  async createResponse(insertResponse: InsertResponse): Promise<Response> {
+    const [response] = await db
+      .insert(responses)
+      .values(insertResponse)
+      .returning();
+    return response;
+  }
+
+  async updateResponse(userId: number, questionId: number, answer: string): Promise<Response | undefined> {
+    // Check if response exists
+    const [existingResponse] = await db
+      .select()
+      .from(responses)
+      .where(and(
+        eq(responses.userId, userId),
+        eq(responses.questionId, questionId)
+      ));
+
+    if (existingResponse) {
+      // Update existing response
+      const [updatedResponse] = await db
+        .update(responses)
+        .set({ answer, updatedAt: new Date() })
+        .where(and(
+          eq(responses.userId, userId),
+          eq(responses.questionId, questionId)
+        ))
+        .returning();
+      return updatedResponse || undefined;
+    } else {
+      // Create new response
+      const newResponse = await this.createResponse({ userId, questionId, answer });
+      return newResponse;
+    }
+  }
+
+  async getResponsesByUserId(userId: number): Promise<(Response & { question: Question })[]> {
+    const responsesData = await db
+      .select({
+        response: responses,
+        question: questions,
+      })
+      .from(responses)
+      .innerJoin(questions, eq(responses.questionId, questions.id))
+      .where(eq(responses.userId, userId))
+      .orderBy(asc(questions.section), asc(questions.order));
+
+    return responsesData.map(({ response, question }) => ({
+      ...response,
+      question,
+    }));
+  }
+
+  async getAllResponsesGroupedByUser(): Promise<{ user: User; responses: (Response & { question: Question })[] }[]> {
+    const usersData = await db.select().from(users);
+    
+    const result = await Promise.all(
+      usersData.map(async (user) => {
+        const userResponses = await this.getResponsesByUserId(user.id);
+        return { user, responses: userResponses };
+      })
+    );
+
+    return result.filter(({ responses }) => responses.length > 0);
+  }
+
+  async saveFile(insertFile: InsertAssessmentFile): Promise<AssessmentFile> {
+    const [file] = await db
+      .insert(assessmentFiles)
+      .values(insertFile)
+      .returning();
+    return file;
   }
 }
 
