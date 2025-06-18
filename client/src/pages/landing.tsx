@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Shield, Users, ArrowRight, FileText } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import logo from "@/assets/logo.png";
 
 export default function LandingPage() {
   const [, setLocation] = useLocation();
@@ -23,7 +24,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
-              <Shield className="h-8 w-8 text-primary" />
+               <img src={ logo } alt="Moore Logo" />
               <h1 className="text-xl font-bold text-gray-900">
                 {t('landing.header.title')}
               </h1>
