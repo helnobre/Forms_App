@@ -61,6 +61,17 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
 
+  // Move useQuery to top level - hooks must not be called conditionally
+  const { data: adminData = [], isLoading, error } = useQuery({
+    queryKey: ['/api/admin/responses'],
+    queryFn: async () => {
+      const response = await fetch('/api/admin/responses');
+      if (!response.ok) throw new Error('Failed to fetch admin data');
+      return response.json();
+    },
+    enabled: isAuthenticated, // Only run query when authenticated
+  });
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError(""); // Clear any previous errors
@@ -121,15 +132,6 @@ export default function AdminPage() {
       </div>
     );
   }
-
-  const { data: adminData = [], isLoading, error } = useQuery({
-    queryKey: ['/api/admin/responses'],
-    queryFn: async () => {
-      const response = await fetch('/api/admin/responses');
-      if (!response.ok) throw new Error('Failed to fetch admin data');
-      return response.json();
-    },
-  });
 
   if (isLoading) {
     return (
