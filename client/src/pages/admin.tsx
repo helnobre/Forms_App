@@ -34,9 +34,23 @@ interface UserData {
   createdAt: string;
 }
 
+interface AssessmentData {
+  id: number;
+  userId: number;
+  year: number;
+  completedAt: string | null;
+  isCompleted: boolean;
+  // Add other assessment fields as needed
+  remoteWorkPercentage?: string;
+  gdprCompliance?: string;
+  sensitiveClientData?: string;
+  // ... other fields
+}
+
 interface AdminData {
   user: UserData;
   responses: Response[];
+  assessments: AssessmentData[];
 }
 
 export default function AdminPage() {
@@ -124,7 +138,7 @@ export default function AdminPage() {
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">
-                  {Array.isArray(adminData) ? adminData.reduce((sum: number, user: AdminData) => sum + user.responses.length, 0) : 0}
+                  {Array.isArray(adminData) ? adminData.reduce((sum: number, user: AdminData) => sum + user.responses.length + (user.assessments?.length || 0), 0) : 0}
                 </div>
                 <div className="text-sm text-gray-500">Total Responses</div>
               </div>
@@ -150,9 +164,16 @@ export default function AdminPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <Badge variant="secondary">
-                    {userData.responses.length} responses
-                  </Badge>
+                  <div className="space-x-2">
+                    <Badge variant="secondary">
+                      {userData.responses.length} responses
+                    </Badge>
+                    {userData.assessments?.length > 0 && (
+                      <Badge variant="outline">
+                        {userData.assessments.length} assessments
+                      </Badge>
+                    )}
+                  </div>
                 </div>
               </CardTitle>
             </CardHeader>
@@ -185,10 +206,55 @@ export default function AdminPage() {
                 </div>
               </div>
 
+              {/* Assessment Data */}
+              {userData.assessments?.length > 0 && (
+                <div className="space-y-6 mb-6">
+                  <h4 className="font-medium text-gray-900">Assessment Data</h4>
+                  {userData.assessments.map((assessment) => (
+                    <div key={assessment.id} className="border rounded-lg p-4 bg-blue-50">
+                      <div className="flex items-center justify-between mb-3">
+                        <h5 className="font-medium text-gray-800">
+                          Assessment {assessment.year}
+                        </h5>
+                        <Badge variant={assessment.isCompleted ? "default" : "secondary"}>
+                          {assessment.isCompleted ? "Completed" : "In Progress"}
+                        </Badge>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        {assessment.remoteWorkPercentage && (
+                          <div>
+                            <span className="font-medium text-gray-700">Remote Work:</span>{" "}
+                            {assessment.remoteWorkPercentage}
+                          </div>
+                        )}
+                        {assessment.gdprCompliance && (
+                          <div>
+                            <span className="font-medium text-gray-700">GDPR Compliance:</span>{" "}
+                            {assessment.gdprCompliance}
+                          </div>
+                        )}
+                        {assessment.sensitiveClientData && (
+                          <div>
+                            <span className="font-medium text-gray-700">Sensitive Client Data:</span>{" "}
+                            {assessment.sensitiveClientData}
+                          </div>
+                        )}
+                        {assessment.completedAt && (
+                          <div>
+                            <span className="font-medium text-gray-700">Completed:</span>{" "}
+                            {new Date(assessment.completedAt).toLocaleString()}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {/* Responses by Section */}
               {userData.responses.length > 0 ? (
                 <div className="space-y-6">
-                  <h4 className="font-medium text-gray-900">Assessment Responses</h4>
+                  <h4 className="font-medium text-gray-900">Dynamic Question Responses</h4>
                   {Object.entries(groupResponsesBySection(userData.responses)).map(
                     ([section, responses]) => (
                       <div key={section} className="border rounded-lg p-4">
@@ -229,11 +295,11 @@ export default function AdminPage() {
                     )
                   )}
                 </div>
-              ) : (
+              ) : userData.assessments?.length === 0 ? (
                 <div className="text-center py-8 text-gray-500">
-                  No responses submitted yet
+                  No responses or assessments submitted yet
                 </div>
-              )}
+              ) : null}
             </CardContent>
           </Card>
         ))}

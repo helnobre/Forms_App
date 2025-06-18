@@ -16,14 +16,14 @@ export interface IStorage {
   updateAssessment(id: number, data: Partial<InsertAssessment>): Promise<Assessment | undefined>;
   getAssessmentsByUserId(userId: number): Promise<Assessment[]>;
   completeAssessment(id: number): Promise<Assessment | undefined>;
-  
+
   // Dynamic questions system
   getQuestionsBySection(section: string): Promise<(Question & { options: Option[] })[]>;
   getAllQuestions(): Promise<(Question & { options: Option[] })[]>;
   createResponse(insertResponse: InsertResponse): Promise<Response>;
   updateResponse(userId: number, questionId: number, answer: string): Promise<Response | undefined>;
   getResponsesByUserId(userId: number): Promise<(Response & { question: Question })[]>;
-  getAllResponsesGroupedByUser(): Promise<{ user: User; responses: (Response & { question: Question })[] }[]>;
+  getAllResponsesGroupedByUser(): Promise<{ user: User; responses: (Response & { question: Question })[]; assessments: Assessment[] }[]>;
   saveFile(insertFile: InsertAssessmentFile): Promise<AssessmentFile>;
 }
 
@@ -99,7 +99,7 @@ export class DatabaseStorage implements IStorage {
           .from(options)
           .where(eq(options.questionId, question.id))
           .orderBy(asc(options.order));
-        
+
         return { ...question, options: optionsData };
       })
     );
@@ -120,7 +120,7 @@ export class DatabaseStorage implements IStorage {
           .from(options)
           .where(eq(options.questionId, question.id))
           .orderBy(asc(options.order));
-        
+
         return { ...question, options: optionsData };
       })
     );
@@ -181,17 +181,87 @@ export class DatabaseStorage implements IStorage {
     }));
   }
 
-  async getAllResponsesGroupedByUser(): Promise<{ user: User; responses: (Response & { question: Question })[] }[]> {
-    const usersData = await db.select().from(users);
-    
-    const result = await Promise.all(
-      usersData.map(async (user) => {
-        const userResponses = await this.getResponsesByUserId(user.id);
-        return { user, responses: userResponses };
-      })
-    );
+  async getAllResponsesGroupedByUser(): Promise<{ user: User; responses: (Response & { question: Question })[]; assessments: Assessment[] }[]> {
+    const result = await db.select({
+      user: {
+        id: users.id,
+        fullName: users.fullName,
+        email: users.email,
+        company: users.company,
+        position: users.position,
+        phone: users.phone,
+        employeeCount: users.employeeCount,
+        createdAt: users.createdAt,
+      },
+      response: {
+        id: responses.id,
+        userId: responses.userId,
+        questionId: responses.questionId,
+        answer: responses.answer,
+        createdAt: responses.createdAt,
+        updatedAt: responses.updatedAt,
+      },
+      question: {
+        id: questions.id,
+        text: questions.text,
+        type: questions.type,
+        section: questions.section,
+        order: questions.order,
+      }
+    })
+    .from(users)
+    .leftJoin(responses, eq(users.id, responses.userId))
+    .leftJoin(questions, eq(responses.questionId, questions.id))
+    .orderBy(asc(users.id), asc(questions.order));
 
-    return result.filter(({ responses }) => responses.length > 0);
+    // Get all assessments
+    const assessmentResult = await db.select()
+      .from(assessments)
+      .orderBy(asc(assessments.userId));
+
+    // Group by user
+    const grouped: { [userId: number]: any } = {};
+
+    result.forEach(row => {
+      const user = row.user;
+      if (!grouped[user.id]) {
+        grouped[user.id] = {
+          user: user,
+          responses: [],
+          assessments: []
+        };
+      }
+
+      if (row.response && row.question) {
+        grouped[user.id].responses.push({
+          ...row.response,
+          question: row.question
+        });
+      }
+    });
+
+    // Add assessments to grouped data
+    assessmentResult.forEach(assessment => {
+      if (grouped[assessment.userId]) {
+        grouped[assessment.userId].assessments.push(assessment);
+      } else {
+        // Create user entry if it doesn't exist (for users with only assessments)
+        db.select()
+          .from(users)
+          .where(eq(users.id, assessment.userId))
+          .then(userResult => {
+            if (userResult.length > 0) {
+              grouped[assessment.userId] = {
+                user: userResult[0],
+                responses: [],
+                assessments: [assessment]
+              };
+            }
+          });
+      }
+    });
+
+    return Object.values(grouped);
   }
 
   async saveFile(insertFile: InsertAssessmentFile): Promise<AssessmentFile> {
