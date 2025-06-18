@@ -25,7 +25,7 @@ export default function LandingPage() {
             <div className="flex items-center space-x-3">
               <Shield className="h-8 w-8 text-primary" />
               <h1 className="text-xl font-bold text-gray-900">
-                Cyber Risk Assessment Platform
+                {t('landing.header.title')}
               </h1>
             </div>
             <div className="flex items-center space-x-2">
@@ -56,11 +56,10 @@ export default function LandingPage() {
               </div>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Comprehensive Cyber Risk Assessment
+              {t('landing.hero.title')}
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Evaluate your organization's cybersecurity posture with our comprehensive assessment tool. 
-              Get insights into vulnerabilities and receive recommendations to strengthen your security framework.
+              {t('landing.hero.description')}
             </p>
           </div>
 
@@ -76,29 +75,27 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    Start Assessment
+                    {t('landing.assessment.title')}
                   </h2>
                   <p className="text-gray-600 mb-8 text-lg">
-                    Begin your comprehensive cybersecurity risk assessment. 
-                    Answer questions across multiple security domains to identify 
-                    vulnerabilities and compliance gaps.
+                    {t('landing.assessment.description')}
                   </p>
                   <div className="space-y-4 mb-8">
                     <div className="flex items-center text-sm text-gray-600">
                       <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                      17 comprehensive security sections
+                      {t('landing.assessment.feature1')}
                     </div>
                     <div className="flex items-center text-sm text-gray-600">
                       <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                      Auto-save functionality
+                      {t('landing.assessment.feature2')}
                     </div>
                     <div className="flex items-center text-sm text-gray-600">
                       <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                      File upload capabilities
+                      {t('landing.assessment.feature3')}
                     </div>
                     <div className="flex items-center text-sm text-gray-600">
                       <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                      Multilingual support
+                      {t('landing.assessment.feature4')}
                     </div>
                   </div>
                   <Button 
@@ -106,7 +103,7 @@ export default function LandingPage() {
                     className="w-full text-lg py-6 bg-blue-600 hover:bg-blue-700"
                     size="lg"
                   >
-                    Begin Assessment
+                    {t('landing.assessment.button')}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </div>
@@ -123,29 +120,27 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    Admin Dashboard
+                    {t('landing.admin.title')}
                   </h2>
                   <p className="text-gray-600 mb-8 text-lg">
-                    Access the administrative dashboard to review all submitted 
-                    assessments, analyze responses, and manage user data across 
-                    your organization.
+                    {t('landing.admin.description')}
                   </p>
                   <div className="space-y-4 mb-8">
                     <div className="flex items-center text-sm text-gray-600">
                       <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                      View all user responses
+                      {t('landing.admin.feature1')}
                     </div>
                     <div className="flex items-center text-sm text-gray-600">
                       <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                      Assessment analytics
+                      {t('landing.admin.feature2')}
                     </div>
                     <div className="flex items-center text-sm text-gray-600">
                       <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                      Export capabilities
+                      {t('landing.admin.feature3')}
                     </div>
                     <div className="flex items-center text-sm text-gray-600">
                       <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                      User management
+                      {t('landing.admin.feature4')}
                     </div>
                   </div>
                   <Button 
@@ -153,7 +148,7 @@ export default function LandingPage() {
                     className="w-full text-lg py-6 bg-purple-600 hover:bg-purple-700"
                     size="lg"
                   >
-                    Access Dashboard
+                    {t('landing.admin.button')}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </div>
@@ -164,37 +159,34 @@ export default function LandingPage() {
           {/* Features Section */}
           <div className="mt-20 text-center">
             <h3 className="text-2xl font-bold text-gray-900 mb-8">
-              Why Choose Our Assessment Platform?
+              {t('landing.features.title')}
             </h3>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="p-6">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Shield className="h-8 w-8 text-green-600" />
                 </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Comprehensive Coverage</h4>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">{t('landing.features.coverage.title')}</h4>
                 <p className="text-gray-600">
-                  Covers all major cybersecurity domains including access control, 
-                  encryption, training, and incident response.
+                  {t('landing.features.coverage.description')}
                 </p>
               </div>
               <div className="p-6">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <FileText className="h-8 w-8 text-blue-600" />
                 </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Dynamic Questions</h4>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">{t('landing.features.dynamic.title')}</h4>
                 <p className="text-gray-600">
-                  Database-driven questions that adapt to your responses with 
-                  intelligent form logic and file upload capabilities.
+                  {t('landing.features.dynamic.description')}
                 </p>
               </div>
               <div className="p-6">
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="h-8 w-8 text-purple-600" />
                 </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Multi-User Support</h4>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">{t('landing.features.multiUser.title')}</h4>
                 <p className="text-gray-600">
-                  Support for multiple organizations with separate data 
-                  storage and comprehensive admin oversight.
+                  {t('landing.features.multiUser.description')}
                 </p>
               </div>
             </div>
@@ -206,7 +198,7 @@ export default function LandingPage() {
       <footer className="bg-white border-t border-gray-200 mt-20">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center text-gray-600">
-            <p>&copy; 2025 Cyber Risk Assessment Platform. All rights reserved.</p>
+            <p>{t('landing.footer.copyright')}</p>
           </div>
         </div>
       </footer>
