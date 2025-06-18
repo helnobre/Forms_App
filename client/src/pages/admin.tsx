@@ -63,6 +63,8 @@ export default function AdminPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setAuthError(""); // Clear any previous errors
+    
     try {
       const response = await fetch('/api/admin/auth', {
         method: 'POST',
@@ -72,14 +74,17 @@ export default function AdminPage() {
         body: JSON.stringify({ password }),
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (response.ok && data.success) {
         setIsAuthenticated(true);
-        setAuthError("");
+        setPassword(""); // Clear the password field
       } else {
-        setAuthError("Invalid password");
+        setAuthError(data.message || "Invalid password");
       }
     } catch (error) {
-      setAuthError("Authentication failed");
+      console.error("Authentication error:", error);
+      setAuthError("Authentication failed. Please try again.");
     }
   };
 
