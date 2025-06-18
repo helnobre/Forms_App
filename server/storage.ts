@@ -182,17 +182,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllResponsesGroupedByUser(): Promise<{ user: User; responses: (Response & { question: Question })[]; assessments: Assessment[] }[]> {
-    const result = await db.select({
-      user: {
-        id: users.id,
-        fullName: users.fullName,
-        email: users.email,
-        company: users.company,
-        position: users.position,
-        phone: users.phone,
-        employeeCount: users.employeeCount,
-        createdAt: users.createdAt,
-      },
+    // Get all users first
+    const allUsers = await db.select().from(users).orderBy(asc(users.id));
+
+    // Get all responses with questions
+    const responsesResult = await db.select({
       response: {
         id: responses.id,
         userId: responses.userId,
@@ -209,10 +203,9 @@ export class DatabaseStorage implements IStorage {
         order: questions.order,
       }
     })
-    .from(users)
-    .leftJoin(responses, eq(users.id, responses.userId))
-    .leftJoin(questions, eq(responses.questionId, questions.id))
-    .orderBy(asc(users.id), asc(questions.order));
+    .from(responses)
+    .innerJoin(questions, eq(responses.questionId, questions.id))
+    .orderBy(asc(responses.userId), asc(questions.order));
 
     // Get all assessments
     const assessmentResult = await db.select()
@@ -222,46 +215,45 @@ export class DatabaseStorage implements IStorage {
     // Group by user
     const grouped: { [userId: number]: any } = {};
 
-    result.forEach(row => {
-      const user = row.user;
-      if (!grouped[user.id]) {
-        grouped[user.id] = {
-          user: user,
-          responses: [],
-          assessments: []
-        };
-      }
+    // Initialize all users
+    allUsers.forEach(user => {
+      grouped[user.id] = {
+        user: {
+          id: user.id,
+          fullName: user.fullName,
+          email: user.email,
+          company: user.company,
+          position: user.position,
+          phone: user.phone,
+          employeeCount: user.employeeCount,
+          createdAt: user.createdAt,
+        },
+        responses: [],
+        assessments: []
+      };
+    });
 
-      if (row.response && row.question) {
-        grouped[user.id].responses.push({
+    // Add responses
+    responsesResult.forEach(row => {
+      if (grouped[row.response.userId]) {
+        grouped[row.response.userId].responses.push({
           ...row.response,
           question: row.question
         });
       }
     });
 
-    // Add assessments to grouped data
+    // Add assessments
     assessmentResult.forEach(assessment => {
       if (grouped[assessment.userId]) {
         grouped[assessment.userId].assessments.push(assessment);
-      } else {
-        // Create user entry if it doesn't exist (for users with only assessments)
-        db.select()
-          .from(users)
-          .where(eq(users.id, assessment.userId))
-          .then(userResult => {
-            if (userResult.length > 0) {
-              grouped[assessment.userId] = {
-                user: userResult[0],
-                responses: [],
-                assessments: [assessment]
-              };
-            }
-          });
       }
     });
 
-    return Object.values(grouped);
+    // Return only users who have either responses or assessments
+    return Object.values(grouped).filter((userData: any) => 
+      userData.responses.length > 0 || userData.assessments.length > 0
+    );
   }
 
   async saveFile(insertFile: InsertAssessmentFile): Promise<AssessmentFile> {
