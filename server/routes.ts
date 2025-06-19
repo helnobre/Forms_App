@@ -204,6 +204,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get uploaded files by user ID
+  app.get("/api/users/:userId/files", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const files = await storage.getFilesByUserId(userId);
+      res.json(files);
+    } catch (error) {
+      console.error("Error fetching files:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   // File upload endpoint
   app.post("/api/upload", upload.single('file'), async (req, res) => {
     try {
@@ -211,7 +223,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "No file uploaded" });
       }
 
-      const { userId, questionId } = req.body;
+      const { userId, questionId, section } = req.body;
       
       // Save file info to database
       const fileData = await storage.saveFile({
@@ -221,6 +233,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         fileType: req.file.mimetype,
         fileSize: req.file.size,
         filePath: req.file.path,
+        section: section || 'general',
       });
 
       // Also save as response if questionId is provided

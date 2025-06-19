@@ -25,6 +25,7 @@ export interface IStorage {
   getResponsesByUserId(userId: number): Promise<(Response & { question: Question })[]>;
   getAllResponsesGroupedByUser(): Promise<{ user: User; responses: (Response & { question: Question })[]; assessments: Assessment[] }[]>;
   saveFile(insertFile: InsertAssessmentFile): Promise<AssessmentFile>;
+  getFilesByUserId(userId: number): Promise<AssessmentFile[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -259,9 +260,16 @@ export class DatabaseStorage implements IStorage {
   async saveFile(insertFile: InsertAssessmentFile): Promise<AssessmentFile> {
     const [file] = await db
       .insert(assessmentFiles)
-      .values(insertFile)
+      .values({
+        ...insertFile,
+        assessmentId: insertFile.assessmentId || 1, // You might need to get the actual assessment ID
+      })
       .returning();
     return file;
+  }
+
+  async getFilesByUserId(userId: number): Promise<AssessmentFile[]> {
+    return await db.select().from(assessmentFiles).where(eq(assessmentFiles.userId, userId));
   }
 }
 

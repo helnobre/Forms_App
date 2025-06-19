@@ -83,17 +83,52 @@ export default function AssessmentForm({
     handleInputChange("riskAssessments", updatedAssessments);
   };
 
-  const handleFileUpload = (sectionId: string, files: FileList | null) => {
-    if (files) {
-      const fileNames = Array.from(files).map(file => file.name);
+  const handleFileUpload = async (sectionId: string, files: FileList | null) => {
+    if (!files || files.length === 0) return;
+
+    const uploadPromises = Array.from(files).map(async (file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('userId', '1'); // You might need to get the actual user ID
+      formData.append('section', sectionId);
+
+      try {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Upload failed');
+        }
+
+        const result = await response.json();
+        return result.fileName;
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        toast({
+          title: "Upload failed",
+          description: `Failed to upload ${file.name}`,
+          variant: "destructive",
+        });
+        throw error;
+      }
+    });
+
+    try {
+      const uploadedFileNames = await Promise.all(uploadPromises);
+      
       setUploadedFiles(prev => ({
         ...prev,
-        [sectionId]: [...(prev[sectionId] || []), ...fileNames]
+        [sectionId]: [...(prev[sectionId] || []), ...uploadedFileNames]
       }));
+
       toast({
         title: "Files uploaded",
         description: `${files.length} file(s) uploaded successfully.`,
       });
+    } catch (error) {
+      console.error('Error uploading files:', error);
     }
   };
 
@@ -390,20 +425,20 @@ export default function AssessmentForm({
               </Label>
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center file-upload-area">
                 <Upload className="mx-auto h-8 w-8 text-gray-400 mb-2" />
-                <p className="text-sm text-gray-600">
-                  Drop files here or{" "}
-                  <label className="text-primary font-medium cursor-pointer">
-                    browse
-                    <input
-                      type="file"
-                      multiple
-                      className="hidden"
-                      accept=".pdf,.doc,.docx"
-                      onChange={(e) => handleFileUpload("password-policy", e.target.files)}
-                    />
-                  </label>
+                <p className="text-sm text-gray-600 mb-3">
+                  Upload password policy documents
                 </p>
-                <p className="text-xs text-gray-500 mt-1">PDF, DOC, DOCX up to 10MB</p>
+                <label className="inline-flex items-center px-4 py-2 text-sm bg-primary text-white rounded-md hover:bg-primary/90 cursor-pointer">
+                  Choose Files
+                  <input
+                    type="file"
+                    multiple
+                    className="hidden"
+                    accept=".pdf,.doc,.docx,.txt"
+                    onChange={(e) => handleFileUpload("password-policy", e.target.files)}
+                  />
+                </label>
+                <p className="text-xs text-gray-500 mt-2">PDF, DOC, DOCX, TXT up to 10MB</p>
                 {uploadedFiles["password-policy"] && (
                   <div className="mt-3 space-y-1">
                     {uploadedFiles["password-policy"].map((fileName, index) => (
