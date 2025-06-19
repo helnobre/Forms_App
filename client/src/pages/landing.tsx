@@ -20,175 +20,109 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+      <header className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
-               <img src={ logo } alt="Moore Logo" />
-              <h1 className="text-xl font-bold text-gray-900">
+              <img src={logo} alt="Moore Logo" className="h-8 w-auto" />
+              <h1 className="text-lg font-semibold text-gray-900">
                 {t('landing.header.title')}
               </h1>
             </div>
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setLanguage(language === 'en' ? 'pt' : 'en')}
-                className="text-sm"
-              >
-                {language === 'en' ? 'PT' : 'EN'}
-              </Button>
-            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setLanguage(language === 'en' ? 'pt' : 'en')}
+              className="text-sm font-medium"
+            >
+              {language === 'en' ? 'PT' : 'EN'}
+            </Button>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-16">
-        <div className="max-w-6xl mx-auto">
+      <main className="container mx-auto px-6 py-12">
+        <div className="max-w-4xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-16">
-            <div className="flex justify-center mb-6">
-              <div className="relative">
-                <Shield className="h-24 w-24 text-primary" />
-                <div className="absolute -top-2 -right-2 h-6 w-6 bg-green-500 rounded-full flex items-center justify-center">
+            <div className="flex justify-center mb-8">
+              <div className="relative p-4 bg-white rounded-2xl shadow-lg">
+                <Shield className="h-16 w-16 text-blue-600" />
+                <div className="absolute -top-1 -right-1 h-5 w-5 bg-green-500 rounded-full flex items-center justify-center">
                   <span className="text-white text-xs font-bold">✓</span>
                 </div>
               </div>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               {t('landing.hero.title')}
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
               {t('landing.hero.description')}
             </p>
           </div>
 
           {/* Action Cards */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Assessment Portal Card */}
-            <Card className="bg-white shadow-lg border-0 hover:shadow-xl transition-shadow duration-300">
-              <CardContent className="p-8">
-                <div className="text-center">
-                  <div className="flex justify-center mb-6">
-                    <div className="p-4 bg-blue-100 rounded-full">
-                      <FileText className="h-12 w-12 text-blue-600" />
-                    </div>
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    {t('landing.assessment.title')}
-                  </h2>
-                  <p className="text-gray-600 mb-8 text-lg">
-                    {t('landing.assessment.description')}
-                  </p>
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                      {t('landing.assessment.feature1')}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                      {t('landing.assessment.feature2')}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                      {t('landing.assessment.feature3')}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                      {t('landing.assessment.feature4')}
-                    </div>
-                  </div>
-                  <Button 
-                    onClick={handleAssessmentClick}
-                    className="w-full text-lg py-6 bg-blue-600 hover:bg-blue-700"
-                    size="lg"
-                  >
-                    {t('landing.assessment.button')}
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
+          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-16">
+            {/* Assessment Card */}
+            <Card className="group bg-white shadow-xl border-0 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer" onClick={handleAssessmentClick}>
+              <CardContent className="p-8 text-center">
+                <div className="p-4 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl inline-block mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <FileText className="h-12 w-12 text-blue-600" />
                 </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                  {t('landing.assessment.title')}
+                </h2>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  {t('landing.assessment.description')}
+                </p>
+                <Button 
+                  className="w-full text-lg py-6 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg"
+                  size="lg"
+                >
+                  {t('landing.assessment.button')}
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </Button>
               </CardContent>
             </Card>
 
-            {/* Admin Dashboard Card */}
-            <Card className="bg-white shadow-lg border-0 hover:shadow-xl transition-shadow duration-300">
-              <CardContent className="p-8">
-                <div className="text-center">
-                  <div className="flex justify-center mb-6">
-                    <div className="p-4 bg-purple-100 rounded-full">
-                      <Users className="h-12 w-12 text-purple-600" />
-                    </div>
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    {t('landing.admin.title')}
-                  </h2>
-                  <p className="text-gray-600 mb-8 text-lg">
-                    {t('landing.admin.description')}
-                  </p>
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                      {t('landing.admin.feature1')}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                      {t('landing.admin.feature2')}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                      {t('landing.admin.feature3')}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                      {t('landing.admin.feature4')}
-                    </div>
-                  </div>
-                  <Button 
-                    onClick={handleAdminClick}
-                    className="w-full text-lg py-6 bg-purple-600 hover:bg-purple-700"
-                    size="lg"
-                  >
-                    {t('landing.admin.button')}
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
+            {/* Admin Card */}
+            <Card className="group bg-white shadow-xl border-0 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer" onClick={handleAdminClick}>
+              <CardContent className="p-8 text-center">
+                <div className="p-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl inline-block mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Users className="h-12 w-12 text-purple-600" />
                 </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                  {t('landing.admin.title')}
+                </h2>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  {t('landing.admin.description')}
+                </p>
+                <Button 
+                  className="w-full text-lg py-6 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-lg"
+                  size="lg"
+                >
+                  {t('landing.admin.button')}
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </Button>
               </CardContent>
             </Card>
           </div>
 
-          {/* Features Section */}
-          <div className="mt-20 text-center">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">
-              {t('landing.features.title')}
-            </h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="p-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Shield className="h-8 w-8 text-green-600" />
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">{t('landing.features.coverage.title')}</h4>
-                <p className="text-gray-600">
-                  {t('landing.features.coverage.description')}
-                </p>
+          {/* Trust Indicators */}
+          <div className="text-center">
+            <div className="flex justify-center items-center space-x-8 text-sm text-gray-500">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span>17 Security Domains</span>
               </div>
-              <div className="p-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileText className="h-8 w-8 text-blue-600" />
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">{t('landing.features.dynamic.title')}</h4>
-                <p className="text-gray-600">
-                  {t('landing.features.dynamic.description')}
-                </p>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span>Multi-language Support</span>
               </div>
-              <div className="p-6">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-8 w-8 text-purple-600" />
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">{t('landing.features.multiUser.title')}</h4>
-                <p className="text-gray-600">
-                  {t('landing.features.multiUser.description')}
-                </p>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span>Enterprise Ready</span>
               </div>
             </div>
           </div>
@@ -196,9 +130,9 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-20">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-gray-600">
+      <footer className="bg-white/50 backdrop-blur-sm border-t border-gray-200 mt-auto">
+        <div className="container mx-auto px-6 py-6">
+          <div className="text-center text-sm text-gray-600">
             <p>{t('landing.footer.copyright')}</p>
           </div>
         </div>
