@@ -135,9 +135,9 @@ const translations = {
     'toast.requiredFieldsDesc': 'All fields marked with * are required.',
     
     // Landing Page
-    'landing.header.title': 'Cyber Risk Assessment Platform',
+    'landing.header.title': 'Moore Cyber Risk Assessment Platform',
     'landing.hero.title': 'Comprehensive Cyber Risk Assessment',
-    'landing.hero.description': 'Evaluate your organization\'s cybersecurity posture with our comprehensive assessment tool. Get insights into vulnerabilities and receive recommendations to strengthen your security framework.',
+    'landing.hero.description': 'Evaluate your organization\'s cybersecurity posture with Moore comprehensive assessment tool. Get insights into vulnerabilities and receive recommendations to strengthen your security framework.',
     'landing.assessment.title': 'Start Assessment',
     'landing.assessment.description': 'Begin your comprehensive cybersecurity risk assessment. Answer questions across multiple security domains to identify vulnerabilities and compliance gaps.',
     'landing.assessment.feature1': '17 comprehensive security sections',
@@ -159,7 +159,7 @@ const translations = {
     'landing.features.dynamic.description': 'Database-driven questions that adapt to your responses with intelligent form logic and file upload capabilities.',
     'landing.features.multiUser.title': 'Multi-User Support',
     'landing.features.multiUser.description': 'Support for multiple organizations with separate data storage and comprehensive admin oversight.',
-    'landing.footer.copyright': '© 2025 Cyber Risk Assessment Platform. All rights reserved.',
+    'landing.footer.copyright': '© 2025 Moore MZ Cyber Risk Assessment Platform. All rights reserved.',
   },
   pt: {
     // Header
@@ -313,7 +313,7 @@ const translations = {
     'landing.features.dynamic.description': 'Perguntas baseadas em banco de dados que se adaptam às suas respostas com lógica de formulário inteligente e capacidades de upload de arquivos.',
     'landing.features.multiUser.title': 'Suporte Multi-Usuário',
     'landing.features.multiUser.description': 'Suporte para múltiplas organizações com armazenamento de dados separado e supervisão administrativa abrangente.',
-    'landing.footer.copyright': '© 2025 Plataforma de Avaliação de Risco Cibernético. Todos os direitos reservados.',
+    'landing.footer.copyright': '© 2025 Plataforma da Moore Moçambique de Avaliação de Risco Cibernético. Todos os direitos reservados.',
   }
 };
 
