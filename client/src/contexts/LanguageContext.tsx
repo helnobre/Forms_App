@@ -291,7 +291,7 @@ const translations = {
     // Landing Page
     'landing.header.title': 'Plataforma de Avaliação de Risco Cibernético',
     'landing.hero.title': 'Avaliação Abrangente de Risco Cibernético',
-    'landing.hero.description': 'Avalie a postura de segurança cibernética da sua organização com nossa ferramenta de avaliação abrangente. Obtenha insights sobre vulnerabilidades e receba recomendações para fortalecer seu framework de segurança.',
+    'landing.hero.description': 'Avalie a situação da cibersegurança da sua organização com a ferramenta de avaliação abrangente da Moore. Obtenha informações sobre vulnerabilidades e receba recomendações para reforçar a sua estrutura de segurança.',
     'landing.assessment.title': 'Iniciar Avaliação',
     'landing.assessment.description': 'Comece sua avaliação abrangente de risco de segurança cibernética. Responda perguntas em múltiplos domínios de segurança para identificar vulnerabilidades e lacunas de conformidade.',
     'landing.assessment.feature1': '17 seções abrangentes de segurança',

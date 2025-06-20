@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, Users, ArrowRight, FileText } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import logo from "@/assets/logo.png";
+import moore from "@/assets/moore.png"
 
 export default function LandingPage() {
   const [, setLocation] = useLocation();
@@ -48,7 +49,8 @@ export default function LandingPage() {
           <div className="text-center mb-16">
             <div className="flex justify-center mb-8">
               <div className="relative p-4 bg-white rounded-2xl shadow-lg">
-                <Shield className="h-16 w-16 text-blue-600" />
+                <img src={moore} alt="Moore Logo" className="h-8 w-auto" />
+                {/*<Shield className="h-16 w-16 text-blue-600" />*/}
                 <div className="absolute -top-1 -right-1 h-5 w-5 bg-green-500 rounded-full flex items-center justify-center">
                   <span className="text-white text-xs font-bold">✓</span>
                 </div>
