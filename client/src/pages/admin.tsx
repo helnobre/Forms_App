@@ -437,7 +437,12 @@ export default function AdminPage() {
                             <div key={key} className="bg-white p-3 rounded border">
                               <div className="font-medium text-gray-700 mb-1">{field.label}:</div>
                               <div className="text-gray-900">
-                                {typeof field.value === 'number' ? field.value : field.value}
+                                {typeof field.value === 'object' && field.value !== null 
+                                  ? JSON.stringify(field.value, null, 2)
+                                  : typeof field.value === 'number' 
+                                    ? field.value 
+                                    : String(field.value || 'N/A')
+                                }
                               </div>
                             </div>
                           );
