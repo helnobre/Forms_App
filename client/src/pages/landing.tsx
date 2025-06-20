@@ -65,9 +65,9 @@ export default function LandingPage() {
           </div>
 
           {/* Action Cards */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-16">
+          <div className="flex justify-center max-w-3xl mx-auto mb-16">
             {/* Assessment Card */}
-            <Card className="group bg-white shadow-xl border-0 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer" onClick={handleAssessmentClick}>
+            <Card className="group bg-white shadow-xl border-0 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer max-w-md" onClick={handleAssessmentClick}>
               <CardContent className="p-8 text-center">
                 <div className="p-4 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl inline-block mb-6 group-hover:scale-110 transition-transform duration-300">
                   <FileText className="h-12 w-12 text-blue-600" />
@@ -83,28 +83,6 @@ export default function LandingPage() {
                   size="lg"
                 >
                   {t('landing.assessment.button')}
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Admin Card */}
-            <Card className="group bg-white shadow-xl border-0 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer" onClick={handleAdminClick}>
-              <CardContent className="p-8 text-center">
-                <div className="p-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl inline-block mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Users className="h-12 w-12 text-purple-600" />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                  {t('landing.admin.title')}
-                </h2>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  {t('landing.admin.description')}
-                </p>
-                <Button 
-                  className="w-full text-lg py-6 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-lg"
-                  size="lg"
-                >
-                  {t('landing.admin.button')}
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
               </CardContent>
