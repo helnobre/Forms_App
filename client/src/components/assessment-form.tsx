@@ -825,8 +825,7 @@ export default function AssessmentForm({
                   <Label htmlFor="segmentation-yes">Yes</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem```text
- value="no" id="segmentation-no" />
+                  <RadioGroupItem value="no" id="segmentation-no" />
                   <Label htmlFor="segmentation-no">No</Label>
                 </div>
               </RadioGroup>
