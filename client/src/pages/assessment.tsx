@@ -15,7 +15,7 @@ import logo from "@/assets/logo.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 const sections: FormSection[] = [
   { id: "user-info", title: "nav.userInfo", icon: "user-circle", completed: false },
-  { id: "general-org", title: ".nav.generalOrg", icon: "building", completed: false },
+  { id: "general-org", title: "nav.generalOrg", icon: "building", completed: false },
   { id: "privacy-compliance", title: "nav.privacyCompliance", icon: "shield-alt", completed: false },
   { id: "sensitive-data", title: "nav.sensitiveData", icon: "lock", completed: false },
   { id: "risk-assessment", title: "nav.riskAssessment", icon: "exclamation-triangle", completed: false },
