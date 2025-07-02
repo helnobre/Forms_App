@@ -33,6 +33,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create a new user
   app.post("/api/users", async (req, res) => {
     try {
+      console.log("Received user data:", req.body);
       const userData = insertUserSchema.parse(req.body);
       const user = await storage.createUser(userData);
       res.json(user);
@@ -233,7 +234,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         fileType: req.file.mimetype,
         fileSize: req.file.size,
         filePath: req.file.path,
-        section: section || 'general',
+        section: section || 'general'
       });
 
       // Also save as response if questionId is provided

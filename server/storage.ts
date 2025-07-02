@@ -6,6 +6,8 @@ import {
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, asc, and } from "drizzle-orm";
+import { pool } from "./db";
+
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
