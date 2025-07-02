@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { FormSection } from "@/lib/types";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SectionNavProps {
   sections: FormSection[];
@@ -8,6 +9,7 @@ interface SectionNavProps {
 }
 
 export default function SectionNav({ sections, currentSection, onSectionClick }: SectionNavProps) {
+  const { t } = useLanguage();
   const getIcon = (iconName: string) => {
     const iconMap: { [key: string]: string } = {
       "user-circle": "👤",
@@ -55,7 +57,7 @@ export default function SectionNav({ sections, currentSection, onSectionClick }:
                   <span>{index + 1}</span>
                 )}
               </div>
-              <span className="flex-1 text-left">{section.title}</span>
+              <span className="flex-1 text-left">{t(section.title)}</span>
               <span className="text-xs opacity-50">{getIcon(section.icon)}</span>
             </button>
           ))}

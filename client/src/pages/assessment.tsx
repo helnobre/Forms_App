@@ -246,10 +246,7 @@ export default function AssessmentPage() {
           <div className="fixed inset-0 bg-black opacity-50" onClick={() => setIsMobileNavOpen(false)} />
           <div className="fixed top-16 left-0 bottom-0 w-64 bg-white shadow-lg overflow-y-auto">
             <SectionNav
-              sections={formSections.map(section => ({ 
-                ...section, 
-                title: t(section.title) 
-              }))}
+              sections={formSections}
               currentSection={currentSection}
               onSectionClick={(index) => {
                 handleSectionClick(index);
@@ -264,10 +261,7 @@ export default function AssessmentPage() {
         {/* Sidebar Navigation */}
         <div className="hidden xl:block fixed left-0 top-16 h-full w-64 bg-white border-r border-gray-200 overflow-y-auto">
           <SectionNav
-            sections={formSections.map(section => ({ 
-              ...section, 
-              title: t(section.title) 
-            }))}
+            sections={formSections}
             currentSection={currentSection}
             onSectionClick={handleSectionClick}
           />
