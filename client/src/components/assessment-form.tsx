@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { FormSection, AssessmentFormData, RiskAssessment } from "@/lib/types";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface AssessmentFormProps {
   sectionIndex: number;
@@ -55,6 +56,7 @@ export default function AssessmentForm({
 }: AssessmentFormProps) {
   const { toast } = useToast();
   const [uploadedFiles, setUploadedFiles] = useState<{ [key: string]: string[] }>({});
+  const { t } = useLanguage();
 
   const handleInputChange = (field: keyof AssessmentFormData, value: any) => {
     onChange({ ...data, [field]: value });
@@ -117,7 +119,7 @@ export default function AssessmentForm({
 
     try {
       const uploadedFileNames = await Promise.all(uploadPromises);
-      
+
       setUploadedFiles(prev => ({
         ...prev,
         [sectionId]: [...(prev[sectionId] || []), ...uploadedFileNames]
@@ -680,7 +682,7 @@ export default function AssessmentForm({
                 </div>
               </RadioGroup>
             </div>
-            
+
             <div>
               <Label className="text-sm font-medium text-gray-700 mb-3 block">
                 Do you maintain a Risk Register?
@@ -823,7 +825,8 @@ export default function AssessmentForm({
                   <Label htmlFor="segmentation-yes">Yes</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="no" id="segmentation-no" />
+                  <RadioGroupItem```text
+ value="no" id="segmentation-no" />
                   <Label htmlFor="segmentation-no">No</Label>
                 </div>
               </RadioGroup>
@@ -979,7 +982,7 @@ export default function AssessmentForm({
         <div className="px-6 py-4 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900 flex items-center">
             {getIcon(section.icon)}
-            {section.title}
+            {t(section.title)}
           </h3>
         </div>
         <CardContent className="p-6">
